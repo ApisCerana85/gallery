@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>gallery of shit</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+    </head>
+    <body>
+        <h1>Shit gallery</h1>
+        {% for album in albums %}
+        <section class="album" style="/*background-image: url({{url_for('static', filename=album.background)}})*/;">
+            <h2 style="text-align: center;">{{ album.title }}</h2>
+            <div class="gallery">
+                {% for image in album.images %}
+                <label class="image-zoom">
+                    <input type="radio" name="zoom">
+                    <img src="{{ url_for('static', filename=image.image_path) }}">
+                    <p>{{ image.author }}</p>
+                </label>
+                {% endfor %}
+            </div>
+        </section>
+        {% endfor %}
+    </body>
+</html>
