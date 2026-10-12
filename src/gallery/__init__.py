@@ -11,7 +11,7 @@ import os
 from image import AlbumManager, Image, ImageCreationError
 import json
 
-album_mngr = AlbumManager(Path(__file__).parent/"static"/"photos")
+album_mngr = AlbumManager(Path(__file__)/"static"/"photos")
 
 app = Flask(__name__)
 @app.route("/")
