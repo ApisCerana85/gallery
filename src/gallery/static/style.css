@@ -19,9 +19,6 @@ body {
     background-repeat: repeat;
     font-family: "Ouroboros-Regular";
 }
-img {
-    min-width: 5%;
-}
 
 .album {
     background-size: cover;
@@ -44,9 +41,10 @@ img {
 }
 
 .image-zoom {
-    flex: 1 1 10%;
+    flex: 1 1 30%;
     transition: flex 0.3s ease;
-    display: block;
+    /* display: block; */
+    min-width: 0;
 }
 .image-zoom input {
     cursor: pointer;
