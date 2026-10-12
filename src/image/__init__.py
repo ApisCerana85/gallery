@@ -1,6 +1,7 @@
 import logging
 import json
 import shutil
+import os
 
 log = logging.getLogger(__name__)
 
@@ -16,14 +17,18 @@ class Image:
     author: str
     image_path: Path
 
+    # def __init__(self, path: Path):
+    #     self.load(path)
+
     def load(self, path: Path):
         """load an Image object from a dir containing an image and a metadata.json file"""
         
-        log.debug(f"loading photo: {path}")
+        log.info(f"loading photo: {path}")
         try:
             with open(path/"metadata.json", 'r') as f:
                 data = json.load(f)
-                self.path = (path / data["filename"]).relative_to(path.parent.parent.parent) # ummmmmmmmmm
+                self.image_path = (path / data["filename"]).relative_to(path.parent.parent.parent) # ummmmmmmmmm
+                log.debug(self.image_path)
                 self.title = data["title"]
                 self.author = data["author"]
         except OSError as err:
@@ -35,7 +40,7 @@ class Image:
 
     def save(self, album_path: Path, title: str, author: str, image_path: Path):
         """save an Image object to a folder containing an image and a metadata.json file"""
-        log.debug(f"saving a photo: {path}")
+        log.info(f"saving a photo: {image_path}")
 
         path = album_path/title
 
@@ -61,11 +66,17 @@ class Image:
         log.debug(f"creating metadata.json")
         try:
             with open(path/"metadata.json", 'a') as f:
-                json.dump(f, {
-                    "filename": self.image_path.name
-                    "title": self.title
+                json.dump({
+                    "filename": self.image_path.name,
+                    "title": self.title,
                     "author": self.author
-                })
+                }, f)
+        except OSError as error:
+            log.error(f"error creating and/or saving matadata.json for: {self.image_path}")
+            raise ImageCreationError from error
+    
+    def get_image_path(self) -> Path:
+        return self.image_path
             
 
 class AlbumError(Exception):
@@ -81,10 +92,11 @@ class Album:
     images: [Image]
     background: Path
     showcase: bool
-    def __init__(self, path: Path) -> self:
-        """create a Album object from a dir containing Images and a metadata.json file"""
+    path: Path
+    def load(self, path: Path) -> self:
+        """load an Album object from a dir containing Images and a metadata.json file"""
         
-        log.debug(f"loading album: {path}")
+        log.info(f"loading album: {path}")
         try:
             with open(path/"metadata.json", 'r') as f:
                 data = json.load(f)
@@ -109,15 +121,56 @@ class Album:
             raise err
         for post in posts:
             try:
-                image = Image(post)
+                image = Image()
+                image.load(post)
             except Exception as e:
-                log.err(f"{post} cannot load: {e}")
+                log.error(f"{post} cannot load: {e}")
                 pass
             else:
+                log.info(f"added image: <{image.title}> to album: <{self.title}>")
                 self.images.append(image)
         
         if path.name=="showcase": self.showcase=True
         else: self.showcase=False
+        self.path=path
+    
+    # def create(self, path: Path, title: str, author: str, images: [Image]):
+    #     """save an Image object to a folder containing an image and a metadata.json file"""
+    #     log.info(f"creating album: {path}")
+
+    #     path = album_path/title
+
+    #     try:
+    #         os.mkdir(path)
+    #     except FileExistsError as e:
+    #         log.error(f"{path} already exists!")
+    #         raise ImageCreationError from e
+    #     except OSError as e:
+    #         log.error(f"os error: {e}")
+    #         raise ImageCreationError from e
+
+    #     try:
+    #         shutil.move(image_path, path/image_path.name)
+    #     except OSError as e:
+    #         log.error(f"couldn't rename <{image_path}> to:<{path/image_path.name}>")
+    #         raise ImageCreationError from e
+
+    #     self.image_path = path/image_path.name
+    #     self.title = title
+    #     self.author = author
+    #     self.path = path
+
+    #     log.debug(f"creating metadata.json")
+    #     try:
+    #         with open(path/"metadata.json", 'a') as f:
+    #             json.dump(f, {
+    #                 "filename": self.image_path.name,
+    #                 "title": self.title,
+    #                 "author": self.author
+    #             })
+    #     except OSError as error:
+    #         log.error(f"error creating and/or saving matadata.json for: {self.image_path}")
+    #         raise ImageCreationError from error
 
 class AlbumManager:
     albums: [Album]
@@ -127,13 +180,16 @@ class AlbumManager:
         self.update()
     
     def update(self):
+        log.info(f"updating AlbumManager")
         self.albums = []
         showcase = None
         try:
             for a in self.path.iterdir():
+                log.info(f"loading album: {a}")
                 if a.is_dir:
                     try:
-                        album = Album(a)
+                        album = Album()
+                        album.load(a)
                         if album.showcase: showcase = album
                         else: self.albums.append(album)
                     except AlbumError as err:
@@ -144,17 +200,18 @@ class AlbumManager:
     def get_albums(self) -> [Album]:
         return self.albums
 
-if __name__ == "__main__":
-    log.info("hello world")
-    import argparse
+# def main():
+#     """do not run manually pleaseee"""
+#     log.info("hello world")
+#     import argparse
 
-    parser = argparse.ArgumentParser()
+#     parser = argparse.ArgumentParser()
     
-    parser.add_argument("-v", "--verbose", help="verbose output for debugging purpouses", action="store_true")
+#     parser.add_argument("-v", "--verbose", help="verbose output for debugging purpouses", action="store_true")
     
-    args = parser.parse_args()
+#     args = parser.parse_args()
     
-    loglevel = logging.INFO
-    if args.verbose: loglevel = logging.DEBUG
+#     loglevel = logging.INFO
+#     if args.verbose: loglevel = logging.DEBUG
 
-    logging.basicConfig(level=loglevel)
+#     logging.basicConfig(level=loglevel)

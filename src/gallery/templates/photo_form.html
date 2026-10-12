@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>add a photo</title>
+    </head>
+    <body>
+        <main>
+            <form method="post" enctype="multipart/form-data">
+                <label>
+                    Title
+                    <input type="text" name="title" required>
+                </label>
+                <label>
+                    Album
+                    <input type="text" name="album" required>
+                </label>
+                <label>
+                    Author
+                    <input type="text" name="author" required>
+                </label>
+                <label>
+                    Photo
+                    <input type="file" name="image" accept="image/*" required>
+                </label>
+                <button type="submit">Upload Photo</button>
+            </form>
+        </main>
+    </body>
+</html>

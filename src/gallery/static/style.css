@@ -5,12 +5,17 @@
     src: url("/static/fonts/ouroboros/fonts/Ouroboros-Regular.ttf");
 }
 
+.gallery-title {
+    font-size:200%;
+    text-align: center;
+}
+
 html, body {
     margin: 0;
     padding: 0;
 }
 body {
-    background-image: url("/static/hobrock.png");
+    /* background-image: url("/static/hobrock.png"); */
     background-repeat: repeat;
     font-family: "Ouroboros-Regular";
 }
@@ -65,5 +70,5 @@ body {
 
 .image-zoom p {
     display: none;
-    transition: 0.2s;
+    transition: 0.3s;
 }

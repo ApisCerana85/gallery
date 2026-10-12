@@ -1,0 +1,1 @@
+uv run gunicorn --chdir src --bind 127.0.0.1:5000 --workers 2 --access-logfile - gallery:app
