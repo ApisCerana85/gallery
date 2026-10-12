@@ -9,6 +9,5 @@ wheels/
 # Virtual environments
 .venv
 
-src/gallery/static/photos
-src/gallery/static/fonts
-src/gallery/static/hobrock.png
+src/gallery/static/photos/*
+src/gallery/static/fonts/*
