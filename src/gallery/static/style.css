@@ -43,7 +43,6 @@ body {
 .image-zoom {
     flex: 1 1 30%;
     transition: flex 0.3s ease;
-    /* display: block; */
     min-width: 0;
 }
 .image-zoom input {
@@ -63,7 +62,7 @@ body {
     /* flex: 2 1 10%; */
     /* transform: scale(1.5); */
     /* z-index: 10; */
-    flex-grow: 2;
+    flex: 0 0 80%;
 }
 .image-zoom:has(input:checked) p {
     display: block;
