@@ -9,5 +9,6 @@ wheels/
 # Virtual environments
 .venv
 
+run_production.sh
 src/gallery/static/photos/*
 src/gallery/static/fonts/*
