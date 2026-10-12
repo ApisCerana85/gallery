@@ -20,6 +20,13 @@ body {
     font-family: "Ouroboros-Regular";
 }
 
+.author {
+    text-align: right;
+}
+.title {
+    text-align: left;
+}
+
 .album {
     background-size: cover;
     background-position: center;
