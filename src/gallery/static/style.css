@@ -19,6 +19,9 @@ body {
     background-repeat: repeat;
     font-family: "Ouroboros-Regular";
 }
+img {
+    min-width: 5%;
+}
 
 .album {
     background-size: cover;
