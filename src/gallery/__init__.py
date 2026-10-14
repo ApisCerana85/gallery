@@ -77,6 +77,11 @@ def add_photo():
     album_mngr.update()
     return "OK", 200
 
+@app.route("/update" methods=["GET"])
+def update():
+    album_mngr.update()
+    return "OK", 200
+
 def main():
     # parser = argparse.ArgumentParser()
     
