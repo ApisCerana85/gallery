@@ -35,16 +35,17 @@ input.zoom, .image-data p{
     display: none;
 }
 .image-zoom img{
+    flex: 1;
     max-width: 100%;
+    width: 100%;
+    transition: width 0.4s ease;
 }
 .image-zoom {
     margin: 2.5%;
     display: flex;
-    transition: width 2s;
     width: 100%;
 }
 .image-zoom:has(input.zoom:checked) img {
-    width: auto;
     width: 80%;
 }
 .image-zoom:has(input.zoom:checked) p {

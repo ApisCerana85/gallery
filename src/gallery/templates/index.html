@@ -18,7 +18,9 @@
                     <div class="image-data">
                         <p class="title">{{ image.title }}</p>
                         <p class="author">Fotis: {{ image.author }}</p>
+                        {% if not image.date == "" %}
                         <p class="date">Dato: {{ image.date }}</p>
+                        {% endif %}
                     </div>
                 </label>
                 {% endfor %}
