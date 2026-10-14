@@ -15,6 +15,7 @@ class Image:
     """a image that will be displayed on the webpage"""
     title: str
     author: str
+    date: date
     image_path: Path
 
     # def __init__(self, path: Path):
@@ -31,12 +32,17 @@ class Image:
                 log.debug(self.image_path)
                 self.title = data["title"]
                 self.author = data["author"]
+                self.date = data["date"]
         except OSError as err:
             raise ImageError from err
         except json.JSONDecodeError as err:
             raise ImageError from err
         except KeyError as err:
-            raise ImageError from err
+            if str(err) == "'date'": # xddd
+                log.warn("no date")
+                self.date = ""
+            else:
+                raise ImageError from err
 
     def save(self, album_path: Path, title: str, author: str, image_path: Path):
         """save an Image object to a folder containing an image and a metadata.json file"""

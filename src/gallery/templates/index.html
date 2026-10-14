@@ -4,7 +4,7 @@
         <title>gallery of shit</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
     </head>
-    <body>
+    <body style="background-image: url({{url_for('static', filename='background.png')}});">
         <h1 class="gallery-title">Shit gallery</h1>
         {% for album in albums %}
         <!-- <section class="album" style="/*background-image: url({{url_for('static', filename=album.background)}})*/;"> -->
@@ -13,10 +13,13 @@
             <div class="gallery">
                 {% for image in album.images %}
                 <label class="image-zoom">
-                    <input type="radio" name="zoom">
+                    <input type="radio" class="zoom" name="zoom">
                     <img src="{{ url_for('static', filename=image.get_image_path()) }}">
-                    <p class="title">{{ image.title }}</p>
-                    <p class="author">{{ image.author }}</p>
+                    <div class="image-data">
+                        <p class="title">{{ image.title }}</p>
+                        <p class="author">Fotis: {{ image.author }}</p>
+                        <p class="date">Dato: {{ image.date }}</p>
+                    </div>
                 </label>
                 {% endfor %}
             </div>

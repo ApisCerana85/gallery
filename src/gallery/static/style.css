@@ -10,72 +10,43 @@
     text-align: center;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-}
 body {
     /* background-image: url("/static/hobrock.png"); */
     background-repeat: repeat;
     font-family: "Ouroboros-Regular";
 }
 
-.author {
-    text-align: right;
-}
-.title {
-    text-align: left;
-}
-
-.album {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    padding: 2%;
-    margin: 1%;
-
-    width: 100%;
-    padding: 0;
-    margin: 2% 0;
-    /* height: 100%; */
-}
 .gallery {
     display: flex;
     flex-wrap: wrap;
-    /* grid-template-columns: repeat(auto-fit, minmax(10%, 1fr)); */
-    gap: 16px;
 }
-
+.image-data {
+    flex: 1;
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+}
+.image-data p{
+    font-size: clamp(12px, 2vw, 32px);
+    height: fit-content;
+    margin: 1%;
+}
+input.zoom, .image-data p{
+    display: none;
+}
+.image-zoom img{
+    max-width: 100%;
+}
 .image-zoom {
-    flex: 1 1 30%;
-    transition: flex 0.3s ease;
-    min-width: 0;
-}
-.image-zoom input {
-    cursor: pointer;
-    display: none;
-}
-.image-zoom img {
-    display: block;
+    margin: 2.5%;
+    display: flex;
+    transition: width 2s;
     width: 100%;
-    height: auto;
-    /* transition: transform 0.2s; */
-    /* cursor: pointer; */
 }
-.image-zoom:has(input:checked) {
-    /* grid-column: span 2;
-    grid-row: span 2; */
-    /* flex: 2 1 10%; */
-    /* transform: scale(1.5); */
-    /* z-index: 10; */
-    flex: 0 0 80%;
+.image-zoom:has(input.zoom:checked) img {
+    width: auto;
+    width: 80%;
 }
-.image-zoom:has(input:checked) p {
+.image-zoom:has(input.zoom:checked) p {
     display: block;
-}
-
-.image-zoom p {
-    display: none;
-    transition: 0.3s;
 }
