@@ -25,6 +25,7 @@ body {
     width: max-content;
     display: flex;
     flex-direction: column;
+    margin: 0;
 }
 .image-data p{
     font-size: clamp(12px, 2vw, 32px);
