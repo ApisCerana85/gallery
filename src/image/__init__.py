@@ -50,14 +50,18 @@ class Image:
 
         path = album_path/title
 
-        try:
-            os.mkdir(path)
-        except FileExistsError as e:
-            log.error(f"{path} already exists!")
-            raise ImageCreationError from e
-        except OSError as e:
-            log.error(f"os error: {e}")
-            raise ImageCreationError from e
+        i=0
+        while True: # scarryyyyy :D
+            path = album_path/(title+str(i))
+            try:
+                os.mkdir(path)
+                break
+            except FileExistsError as e:
+                log.error(f"{path} already exists!")
+                i+=1
+            except OSError as e:
+                log.error(f"os error: {e}")
+                raise ImageCreationError from e
 
         try:
             shutil.move(image_path, path/image_path.name)
